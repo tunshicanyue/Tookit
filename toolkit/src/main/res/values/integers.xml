@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="animation_default_duration">300</integer>
+    <integer name="code_len">6</integer>
+    <integer name="pwd_min_len">8</integer>
+    <integer name="pwd_max_len">20</integer>
+    <integer name="feedback_content_len">200</integer>
+    <integer name="phone_len">11</integer>
+    <integer name="name_max_len">12</integer>
+    <integer name="invite_duration">200</integer>
+</resources>

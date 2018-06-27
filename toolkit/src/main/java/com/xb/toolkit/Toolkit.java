@@ -17,7 +17,7 @@ public final class Toolkit {
     static Toolkit mToolkit;
 
     Toolkit(Application application) {
-       this.application = application;
+        this.application = application;
     }
 
     public static Toolkit create(Application application) {
@@ -54,6 +54,11 @@ public final class Toolkit {
             throw new NullPointerException("Toolkit no init");
         }
         return mToolkit;
+    }
+
+    public XHttpProxy getHttpProxy() {
+        if (mHttpProxy == null) throw new NullPointerException("no init Toolkit");
+        return mHttpProxy;
     }
 
     public boolean isDebug() {

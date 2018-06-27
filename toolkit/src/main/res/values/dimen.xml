@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_bar_height">45dp</dimen>
+    <dimen name="title_bar_title_text_size">18sp</dimen>
+    <dimen name="title_bar_left_text_size">14sp</dimen>
+    <dimen name="no_network_height">39dp</dimen>
+
+    <!--标题文字大小-->
+    <dimen name="textSize_alert_title">17sp</dimen>
+    <dimen name="textSize_actionsheet_title">14sp</dimen>
+    <!--标题文字高度-->
+    <dimen name="height_alert_title">60dp</dimen>
+    <dimen name="height_actionsheet_title">40dp</dimen>
+    <!--消息文字大小-->
+    <dimen name="textSize_alert_msg">13sp</dimen>
+    <dimen name="textSize_actionsheet_msg">14sp</dimen>
+    <!--消息文字间距-->
+    <dimen name="margin_lineSpacingExtra">10dp</dimen>
+    <!--消息距离左右间距-->
+    <dimen name="marginStart_End_alert_msg">13dp</dimen>
+    <!--消息距离底部间距-->
+    <dimen name="marginBottom_alert_msg">15dp</dimen>
+    <dimen name="marginBottom_actionsheet_msg">14dp</dimen>
+    <!--窗口模式左右两边到屏幕的间距-->
+    <dimen name="margin_alert_left_right">50dp</dimen>
+    <dimen name="margin_actionsheet_left_right">10dp</dimen>
+    <!--线条粗细-->
+    <dimen name="size_divier">0.5dp</dimen>
+    <dimen name="size_divier_none">0dp</dimen>
+    <!--按钮的高度-->
+    <dimen name="height_alert_button">48dp</dimen>
+    <!--按钮文字大小-->
+    <dimen name="textSize_alert_button">15sp</dimen>
+    <!--圆角-->
+    <dimen name="radius_alertview">12dp</dimen>
+
+</resources>

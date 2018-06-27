@@ -1,6 +1,7 @@
 package com.xb.toolkit.http;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.xb.toolkit.Toolkit;
@@ -70,15 +71,23 @@ public class XHttpProxy {
 
 
     public static class Builder {
-        private WeakReference<Context> mContext;
+        private WeakReference<Activity> mContext;
         private Observable apiService;
         private boolean isShowDialog;
         private boolean isCache;//网络请求是否缓存
+        private boolean isPage;//是否进行分页处理
+        private boolean page;//页数
         private Class<? extends XBean> clazz;//实体bean
         private XOnResultListener mXOnResultListener;
 
-        public Builder setContext(Context context) {
-            mContext = new WeakReference<>(context);
+
+        Builder setCache(boolean cache) {
+            isCache = cache;
+            return this;
+        }
+
+        public Builder setContext(Activity context) {
+            mContext = new WeakReference<Activity>(context);
             return this;
         }
 
@@ -92,10 +101,6 @@ public class XHttpProxy {
             return this;
         }
 
-        public Builder setCache(boolean cache) {
-            isCache = cache;
-            return this;
-        }
 
         public Builder setClazz(Class<? extends XBean> clazz) {
             this.clazz = clazz;
@@ -107,7 +112,7 @@ public class XHttpProxy {
             return this;
         }
 
-        public WeakReference<Context> getContext() {
+        public WeakReference<Activity> getContext() {
             return mContext;
         }
 
@@ -137,7 +142,7 @@ public class XHttpProxy {
     }
 
 
-    public XHttpManager xhttpManager(){
+    public XHttpManager xhttpManager() {
         return XHttpManager.getInstance();
     }
 

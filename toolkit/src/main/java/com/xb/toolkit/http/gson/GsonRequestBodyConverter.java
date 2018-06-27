@@ -1,8 +1,11 @@
 package com.xb.toolkit.http.gson;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonWriter;
+import com.xb.toolkit.utils.LogUtils;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -43,6 +46,7 @@ public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
         JsonWriter jsonWriter = gson.newJsonWriter(writer);
         adapter.write(jsonWriter, value);
         jsonWriter.close();
+        LogUtils.e(buffer.toString());
         return RequestBody.create(MEDIA_TYPE, buffer.readByteString());
     }
 }

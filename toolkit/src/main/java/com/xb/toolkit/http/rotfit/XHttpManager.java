@@ -23,7 +23,7 @@ public class XHttpManager {
 
     public static XHttpManager getInstance() {
         synchronized (XHttpManager.class) {
-            if (mHttpManager != null) {
+            if (mHttpManager == null) {
                 mHttpManager = new XHttpManager();
             }
         }

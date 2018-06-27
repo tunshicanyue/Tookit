@@ -1,6 +1,8 @@
 package com.xb.canyue;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
@@ -10,7 +12,8 @@ import retrofit2.http.POST;
 public interface ApiTestService {
 
     /*刷新Token*/
+    @FormUrlEncoded
     @POST("refreshToken")
-    Observable<RefreshTokenBean> refreshToken();
+    Observable<RefreshTokenBean> refreshToken(@Field("keys") String value);
 
 }

@@ -4,15 +4,16 @@ package com.xb.toolkit.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.xb.toolkit.Toolkit;
+
 
 /**
  * 日志控件
  */
 public class LogUtils {
 
-    public static boolean isDebug = true;
+    public static boolean isDebug = Toolkit.getToolkit().isDebug();
     public static String TAG = "LogUtils";
-
 
 
     public static void i(String tag, String msg) {
