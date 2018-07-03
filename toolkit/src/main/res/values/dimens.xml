@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dp29">29dp</dimen>
+    <dimen name="x_title_padding_size">13dp</dimen>
+</resources>

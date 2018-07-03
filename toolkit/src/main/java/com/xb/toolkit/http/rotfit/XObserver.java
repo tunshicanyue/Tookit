@@ -64,7 +64,7 @@ public class XObserver<T extends XBean> implements Observer<T> {
 
     @Override
     public void onComplete() {
-//        XHttpDialogManager.getInstance().dismissDialog();
+        XHttpDialogManager.getInstance().dismissDialog();
         XHttpManager.getInstance().removerDisposable(mBuilder.getClazz().getName());
         if (mBuilder.getContext() != null) {
             mBuilder.getContext().clear();

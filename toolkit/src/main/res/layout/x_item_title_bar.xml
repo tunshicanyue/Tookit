@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/white"
+        android:paddingEnd="@dimen/x_title_padding_size"
+        android:paddingStart="@dimen/x_title_padding_size">
+
+        <RelativeLayout
+            android:id="@+id/title_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingEnd="@dimen/title_bar_height"
+                android:paddingStart="@dimen/title_bar_height"
+                android:textColor="@color/gray_28"
+                android:textSize="@dimen/title_bar_title_text_size"
+                android:text="title" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_chevron_left_black_24dp"
+            android:drawableStart="@drawable/ic_chevron_left_black_24dp"
+            android:gravity="center"
+            android:minWidth="@dimen/title_bar_height"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/title_bar_left_text_size"
+            android:visibility="visible"
+            android:text="@string/title_back" />
+
+        <com.xb.toolkit.ui.widgets.ClearEditTextView
+            android:id="@+id/cet_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp29"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="13dp"
+            android:layout_marginStart="13dp"
+            android:layout_toEndOf="@+id/tv_left"
+            android:layout_toStartOf="@+id/right_action_container"
+            android:background="@drawable/x_title_search_bg"
+            android:drawablePadding="5dp"
+            android:imeOptions="actionSearch"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:textColor="@color/gray_28"
+            android:textColorHint="@color/gray_9"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/right_action_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <!--<ViewStub-->
+    <!--android:id="@+id/vs_no_network"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/no_network_height"-->
+    <!--android:layout="@layout/no_network" />-->
+</LinearLayout>

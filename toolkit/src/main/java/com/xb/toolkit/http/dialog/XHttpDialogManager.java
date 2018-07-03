@@ -1,17 +1,7 @@
 package com.xb.toolkit.http.dialog;
 
 import android.app.Activity;
-import android.app.Dialog;
 
-import com.xb.toolkit.R;
-
-import java.lang.ref.WeakReference;
-
-import retrofit2.http.PUT;
-
-/**
- * Created by admin on 2018/6/27.
- */
 
 public class XHttpDialogManager {
 

@@ -93,6 +93,15 @@ public class ScreenUtils {
         return outMetrics.heightPixels;
     }
 
+    public static boolean isKeyboardShown(View rootView) {
+        final int softKeyboardHeight = 100;
+        Rect r = new Rect();
+        rootView.getWindowVisibleDisplayFrame(r);
+        DisplayMetrics dm = rootView.getResources().getDisplayMetrics();
+        int heightDiff = rootView.getBottom() - r.bottom;
+        return heightDiff > softKeyboardHeight * dm.density;
+    }
+
     /**
      * 获得状态栏的高度
      *

@@ -9,6 +9,15 @@ public class XBean {
     private String message;
     private String xCacheUrl;
 
+
+    public void setxCacheUrl(String xCacheUrl) {
+        this.xCacheUrl = xCacheUrl;
+    }
+
+    public String getxCacheUrl() {
+        return xCacheUrl;
+    }
+
     public void setMessage(String message) {
         this.message = message;
     }

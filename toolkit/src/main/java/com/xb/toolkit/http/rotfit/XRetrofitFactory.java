@@ -29,18 +29,15 @@ public class XRetrofitFactory {
 
         //是否打印日志
         if (Toolkit.getToolkit().isDebug()) {
-            builder.addInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request();
-                    Response response = chain.proceed(request);
-                    String param = getRequestParam(request);
-                    LogUtils.e("[ url =" + chain.request().url() +
-                            " method: " + chain.request().method() +
-                            " param: " + param + " ]");
-                    LogUtils.e("header:" + request.headers().toString());
-                    return response;
-                }
+            builder.addInterceptor(chain -> {
+                Request request = chain.request();
+                Response response = chain.proceed(request);
+                String param = getRequestParam(request);
+                LogUtils.e("[ url =" + chain.request().url() +
+                        " method: " + chain.request().method() +
+                        " param: " + param + " ]");
+                LogUtils.e("header:" + request.headers().toString());
+                return response;
             });
         }
     }
@@ -71,8 +68,6 @@ public class XRetrofitFactory {
      * @return
      */
     public static <T> T create(String url, Class<T> clazz) {
-
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(builder.build())
