@@ -32,6 +32,11 @@ public class Test2 extends XDefaultMVPActivity<XBasePresenter,XIBaseModel> {
     }
 
     @Override
+    public void showPermissionFailureDialog(int permissionType, String[] permission) {
+
+    }
+
+    @Override
     protected XBasePresenter createPresenter() {
         return null;
     }

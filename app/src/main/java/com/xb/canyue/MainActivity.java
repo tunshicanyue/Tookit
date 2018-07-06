@@ -57,24 +57,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void testHttp() {
         ApiTestService apiTestService = XHttpProxy.create(ApiTestService.class);
-        XHttpProxy.init().sendHttp(
-                new XHttpProxy.Builder().setApiService(apiTestService.refreshToken("value"))
-                        .setClazz(RefreshTokenBean.class)
-                        .setShowDialog(true)
-                        .setContext(this)
-                        .setXOnResultListener(new XOnResultListener<RefreshTokenBean>() {
-                            @Override
-                            public void onRequestSuccess(RefreshTokenBean refreshTokenBean) {
-                                LogUtils.i(refreshTokenBean.toString());
-                            }
+        new XHttpProxy
+                .Builder()
+                .setApiService(apiTestService.refreshToken("value"))
+                .setClazz(RefreshTokenBean.class)
+                .setShowDialog(true)
+                .setContext(this)
+                .setXOnResultListener(new XOnResultListener<RefreshTokenBean>() {
+                    @Override
+                    public void onRequestSuccess(RefreshTokenBean refreshTokenBean) {
+                        LogUtils.i(refreshTokenBean.toString());
+                    }
 
-                            @Override
-                            public void onRequestFailed(String failedMsg, XHttpProxy.RequestType requestType) {
-                                LogUtils.i(failedMsg);
-                            }
-                        })
+                    @Override
+                    public void onRequestFailed(String failedMsg, XHttpProxy.RequestType requestType) {
+                        LogUtils.i(failedMsg);
+                    }
+                })
+                .request();
 
-        );
     }
 
     public void dialog(View view) {

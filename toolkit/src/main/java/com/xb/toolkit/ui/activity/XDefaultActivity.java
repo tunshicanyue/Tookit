@@ -1,21 +1,21 @@
 package com.xb.toolkit.ui.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -26,7 +26,10 @@ import com.xb.toolkit.R;
 import com.xb.toolkit.Toolkit;
 import com.xb.toolkit.imp.IKeyboardListener;
 import com.xb.toolkit.imp.IXDefaultActivity;
+import com.xb.toolkit.imp.IXPermissionListener;
+import com.xb.toolkit.imp.IXRequestPermissionCallBack;
 import com.xb.toolkit.ui.fragment.XDefaultFragment;
+import com.xb.toolkit.utils.PermissionsUtil;
 import com.xb.toolkit.utils.ScreenUtils;
 
 import butterknife.ButterKnife;
@@ -35,7 +38,7 @@ import butterknife.Unbinder;
 /**
  * 基类Activity
  */
-public abstract class XDefaultActivity extends AppCompatActivity implements IXDefaultActivity {
+public abstract class XDefaultActivity extends AppCompatActivity implements IXDefaultActivity, IXPermissionListener {
 
 
     private ViewStub mIdTitleBar;
@@ -52,6 +55,25 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
      */
     private boolean isShowTitle = true;
     private ViewTreeObserver.OnGlobalLayoutListener mChangeListener;
+
+    /**
+     * 权限请求回调
+     */
+    private IXRequestPermissionCallBack mRequestPermissionCallBack;
+
+    /**
+     * 权限请求失败的弹窗类型
+     */
+    private int mPermissionType;
+
+    /**
+     * 跳转到系统权限设置的请求码
+     */
+    public static int REQUEST_SETTING = 0x101;
+    /**
+     * 其他权限没有指定的类型
+     */
+    public static final int PERMISSION_TYPE_OTHER = 0x1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -237,5 +259,70 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
     public void showToast(String msg) {
         if (TextUtils.isEmpty(msg)) return;
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void toSystemSetting() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, REQUEST_SETTING);
+    }
+
+
+    /*start权限*/
+    @Override
+    public final void permissionDenied(@NonNull String[] permission) {
+        // 权限请求失败
+        boolean hasMultDenied = false;
+        for (String p : permission) {
+            hasMultDenied = !ActivityCompat.shouldShowRequestPermissionRationale(this, p);
+            if (hasMultDenied) {
+                break;
+            }
+        }
+        if (hasMultDenied) {
+            showPermissionFailureDialog(mPermissionType, permission);
+        } else {
+            if (mRequestPermissionCallBack != null) {
+                mRequestPermissionCallBack.permissionDenied(permission);
+            }
+        }
+    }
+
+    @Override
+    public final void permissionGranted(@NonNull String[] permission) {
+        //权限请求成功
+        if (mRequestPermissionCallBack != null) {
+            mRequestPermissionCallBack.permissionDenied(permission);
+        }
+    }
+
+
+    @Override
+    public final void requestPermission(int permissionType, IXRequestPermissionCallBack listener, @NonNull String... permissions) {
+        mPermissionType = permissionType;
+        mRequestPermissionCallBack = listener;
+        // 检查是否有权限
+        if (PermissionsUtil.hasPermission(this, permissions)) {
+            if (listener != null) {
+                listener.permissionGranted(permissions);
+            } else {
+                permissionGranted(permissions);
+            }
+        } else {
+            // 请求权限
+            PermissionsUtil.requestPermission(this, this, permissions, false, null);
+        }
+    }
+
+
+    @Override
+    public void requestPermission(IXRequestPermissionCallBack listener, @NonNull String... permissions) {
+        requestPermission(PERMISSION_TYPE_OTHER, listener, permissions);
+    }
+
+    @Override
+    public void requestPermission(@NonNull String... permissions) {
+        requestPermission(PERMISSION_TYPE_OTHER, null, permissions);
     }
 }

@@ -1,12 +1,16 @@
 package com.xb.canyue;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.xb.toolkit.imp.IKeyboardListener;
+import com.xb.toolkit.imp.IXRequestPermissionCallBack;
 import com.xb.toolkit.ui.activity.XDefaultActivity;
 
 import butterknife.BindView;
@@ -56,19 +60,27 @@ public class TestActivity extends XDefaultActivity {
         return false;
     }
 
+    @Override
+    public void showPermissionFailureDialog(int permissionType, String[] permission) {
+        Toast.makeText(this, "showPermissionFailureDialog", Toast.LENGTH_SHORT).show();
+    }
+
     int count = 0;
 
     public void dialog(View view) {
 
-        count++;
-//        changeTitle(count % 2 == 0);
+        requestPermission(new IXRequestPermissionCallBack() {
+            @Override
+            public void permissionGranted(@NonNull String[] permission) {
 
-        setFullScreen(count%2 ==0);
-        if (count%2 ==0) {
-            closeKeyboard(mEtText);
-        } else {
-            openKeyboard(mEtText);
-        }
+                Log.i(TAG, "permissionGranted: ");
+            }
+
+            @Override
+            public void permissionDenied(@NonNull String[] permission) {
+                Log.i(TAG, "permissionDenied: ");
+            }
+        }, Manifest.permission.CALL_PHONE);
     }
 
 

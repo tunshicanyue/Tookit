@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 
@@ -112,4 +113,31 @@ public interface IXDefaultActivity {
      * @param msg
      */
     void showToast(String msg);
+
+
+    /**
+     * 跳转到系统粉设置界面
+     */
+    void toSystemSetting();
+
+
+    /**
+     * 请求权限
+     *
+     * @param permissionType 请求权限的弹窗类型 不能为 0x1
+     * @param listener       权限监听
+     * @param permissions    权限
+     */
+    void requestPermission(int permissionType, IXRequestPermissionCallBack listener, @NonNull String... permissions);
+    void requestPermission(IXRequestPermissionCallBack listener, @NonNull String... permissions);
+    void requestPermission(@NonNull String... permissions);
+
+    /**
+     * 权限请求失败的提心弹窗
+     *
+     * @param permissionType 弹窗的消息类型
+     * @param permission     权限
+     */
+    void showPermissionFailureDialog(int permissionType, String[] permission);
+
 }
