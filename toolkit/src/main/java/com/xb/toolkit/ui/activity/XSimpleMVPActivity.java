@@ -13,6 +13,11 @@ public abstract class XSimpleMVPActivity extends XDefaultMVPActivity<XBasePresen
     protected XBasePresenter createPresenter() {
         return new XBasePresenter() {
             @Override
+            public void onRequestSuccess(Object o) {
+
+            }
+
+            @Override
             public XIBaseModel getModel() {
                 return new XIBaseModel() {
                 };

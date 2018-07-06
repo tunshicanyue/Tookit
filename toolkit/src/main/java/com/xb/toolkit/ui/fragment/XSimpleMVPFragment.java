@@ -1,6 +1,5 @@
 package com.xb.toolkit.ui.fragment;
 
-import android.os.Bundle;
 
 import com.xb.toolkit.imp.mvp.XBasePresenter;
 import com.xb.toolkit.imp.mvp.XIBaseModel;
@@ -15,6 +14,11 @@ public abstract class XSimpleMVPFragment extends XDefaultMVPActivity<XBasePresen
     @Override
     protected XBasePresenter createPresenter() {
         return new XBasePresenter() {
+            @Override
+            public void onRequestSuccess(Object o) {
+
+            }
+
             @Override
             public XIBaseModel getModel() {
                 return new XIBaseModel() {};
