@@ -3,6 +3,7 @@ package com.xb.canyue;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.xb.toolkit.imp.IKeyboardListener;
@@ -16,6 +17,8 @@ public class TestActivity extends XDefaultActivity {
     LinearLayout mRoot;
 
     public static final String TAG = "XDefaultActivity";
+    @BindView(R.id.et_text)
+    EditText mEtText;
 
     @Override
     public int layoutID() {
@@ -58,15 +61,15 @@ public class TestActivity extends XDefaultActivity {
     public void dialog(View view) {
 
         count++;
-        changeTitle(count % 2 == 0);
+//        changeTitle(count % 2 == 0);
 
-
+        setFullScreen(count%2 ==0);
+        if (count%2 ==0) {
+            closeKeyboard(mEtText);
+        } else {
+            openKeyboard(mEtText);
+        }
     }
 
 
-    //    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_test);
-//    }
 }

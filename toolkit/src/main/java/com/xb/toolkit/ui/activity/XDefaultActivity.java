@@ -1,17 +1,26 @@
 package com.xb.toolkit.ui.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.xb.toolkit.R;
 import com.xb.toolkit.Toolkit;
@@ -34,7 +43,13 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
     protected LinearLayout mXRoot;
     private Unbinder mUnbinder;
     private View mLayoutTitleView;
+    /**
+     * 是否全屏
+     */
     private boolean isFullScreen = false;
+    /**
+     * 是否显示Title
+     */
     private boolean isShowTitle = true;
     private ViewTreeObserver.OnGlobalLayoutListener mChangeListener;
 
@@ -83,8 +98,11 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
             mLayoutTitleView.setVisibility(View.GONE);
         }
         //全屏的时候隐藏title
-        if (isFullScreen) changeTitle(false);
-        else changeTitle(isShowTitle);
+        if (!isFullScreen) changeTitle(isShowTitle);
+        //是否全屏
+        if (isFullScreen()) {
+            openFullScreen();
+        }
     }
 
     @Override
@@ -137,11 +155,13 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
         toActivity(clazz, null, requestCode);
     }
 
-
     /*软键盘开关*/
     @Override
     public void fullScreenKeyBoardListener(IKeyboardListener listener) {
         if (listener == null) return;
+        //        stateAlwaysHidden|adjustResize
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+                | WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (mChangeListener == null) {
             mChangeListener = () -> {
                 if (ScreenUtils.isKeyboardShown(mXRoot)) {
@@ -159,6 +179,8 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
     @Override
     public void unFullScreenKeyBoardListener(View rootView, IKeyboardListener listener) {
         if (rootView == null || listener == null) return;
+        //必须设置 不然无法监听 adjustResize
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         int keyHeight = ScreenUtils.getScreenHeight(Toolkit.getToolkit().getApplication()) / 3;
         rootView.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
@@ -169,5 +191,51 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
                 listener.closeKeyboard();
             }
         });
+    }
+
+
+    @Override
+    public void openKeyboard(EditText editText) {
+        if (editText == null) return;
+        InputMethodManager imm = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, InputMethodManager.RESULT_SHOWN);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
+                InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    @Override
+    public void closeKeyboard(EditText editText) {
+        if (editText == null) return;
+        InputMethodManager imm = (InputMethodManager) this
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+
+    @Override
+    public void openFullScreen() {
+        // TODO: 2018/7/5 开启全屏模式
+//        if (Build.VERSION.SDK_INT >= 19) {
+//            View decorView = getWindow().getDecorView();
+//            //隐藏状态栏
+//            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//            decorView.setSystemUiVisibility(uiOptions);
+//            //记住如果您隐藏状态栏绝不要显示活动栏，所以隐藏它也是必要的。
+//            ActionBar actionBar = getActionBar();
+//            if (actionBar != null) {
+//                actionBar.hide();
+//            }
+//        } else {
+//            View decorView = getWindow().getDecorView();
+//            int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//            decorView.setSystemUiVisibility(option);
+//        }
+    }
+
+    @Override
+    public void showToast(String msg) {
+        if (TextUtils.isEmpty(msg)) return;
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

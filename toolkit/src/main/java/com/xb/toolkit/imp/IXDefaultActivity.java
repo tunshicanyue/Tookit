@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 /**
  * activity 的接口
@@ -90,5 +91,25 @@ public interface IXDefaultActivity {
      */
     void unFullScreenKeyBoardListener(View rootView, IKeyboardListener listener);
 
+    /**
+     * 开启软键盘
+     */
+    void openKeyboard(EditText editText);
 
+    /**
+     * 关闭软键盘
+     */
+    void closeKeyboard(EditText editText);
+
+    /**
+     * 开启全屏
+     */
+    void openFullScreen();
+
+    /**
+     * 提示框
+     *
+     * @param msg
+     */
+    void showToast(String msg);
 }

@@ -52,7 +52,7 @@ public class XHttpProxy {
     }
 
 
-    public void sendHttp(Builder builder) {
+    private void sendHttp(Builder builder) {
         if (builder == null) throw new RuntimeException("http request no builder null");
         Observable observable = builder.apiService
                 .subscribeOn(Schedulers.io())
@@ -135,6 +135,13 @@ public class XHttpProxy {
         public XOnResultListener getXOnResultListener() {
             return mXOnResultListener;
         }
+
+
+        public void request() {
+            if (mXHttpProxy == null) throw new NullPointerException("mXHttpProxy no init");
+            mXHttpProxy.sendHttp(this);
+        }
+
     }
 
     public enum RequestType {
