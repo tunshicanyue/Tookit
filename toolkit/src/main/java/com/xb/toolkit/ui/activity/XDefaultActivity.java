@@ -29,6 +29,7 @@ import com.xb.toolkit.imp.IXDefaultActivity;
 import com.xb.toolkit.imp.IXPermissionListener;
 import com.xb.toolkit.imp.IXRequestPermissionCallBack;
 import com.xb.toolkit.ui.fragment.XDefaultFragment;
+import com.xb.toolkit.utils.AppManager;
 import com.xb.toolkit.utils.PermissionsUtil;
 import com.xb.toolkit.utils.ScreenUtils;
 
@@ -74,10 +75,12 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
      * 其他权限没有指定的类型
      */
     public static final int PERMISSION_TYPE_OTHER = 0x1;
+    private InputMethodManager imm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppManager.getAppManager().addActivity(this);
         setContentView(R.layout.activity_x_default);
         mIdTitleBar = findViewById(R.id.id_title_bar);
         mXRoot = findViewById(R.id.x_root);
@@ -95,6 +98,7 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
             if (!isFullScreen() && isShowActionBar() && mIdTitleBar.getParent() != null) {
                 mIdTitleBar.setLayoutResource(layoutTitleID());
                 mLayoutTitleView = mIdTitleBar.inflate();
+                initTitleView(mLayoutTitleView);
             }
             XDefaultActivity.this.onCreateView(savedInstanceState);
         });
@@ -130,14 +134,10 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AppManager.getAppManager().removeActivity(this);
         if (mUnbinder != null) mUnbinder.unbind();
         if (mChangeListener != null)
             mXRoot.getViewTreeObserver().removeOnGlobalLayoutListener(mChangeListener);
-    }
-
-    @Override
-    public View titleView() {
-        return mLayoutTitleView;
     }
 
     @Override
@@ -217,23 +217,24 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
 
 
     @Override
-    public void openKeyboard(EditText editText) {
-        if (editText == null) return;
-        InputMethodManager imm = (InputMethodManager)
-                getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(editText, InputMethodManager.RESULT_SHOWN);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
-                InputMethodManager.HIDE_IMPLICIT_ONLY);
+    public void openKeyboard(View view) {
+        if (view == null) return;
+        if (imm == null) {
+            imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
+        view.postDelayed(() -> imm.showSoftInput(view, InputMethodManager.SHOW_FORCED), 50);
     }
 
     @Override
-    public void closeKeyboard(EditText editText) {
-        if (editText == null) return;
-        InputMethodManager imm = (InputMethodManager) this
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-    }
+    public void closeKeyboard() {
+        if (imm == null) {
+            imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
+        if (imm.isActive()) {
+            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        }
 
+    }
 
     @Override
     public void openFullScreen() {

@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xb.toolkit.utils.LogUtils;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -32,12 +34,14 @@ public class XDefaultFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (layoutId() != -1) layoutId = layoutId();
-        View inflate = inflater.inflate(layoutId, null);
-        mUnbinder = ButterKnife.bind(this, inflate);
-        return inflate;
+        if (layoutId > 0) {
+            View inflate = inflater.inflate(layoutId, null);
+            mUnbinder = ButterKnife.bind(this, inflate);
+            return inflate;
+        }
+        LogUtils.e("fragment 的布局ID不能为空");
+        return null;
     }
-
-
 
 
     @Override

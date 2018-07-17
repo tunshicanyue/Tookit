@@ -2,7 +2,10 @@ package com.xb.toolkit.utils;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
+
+import com.xb.toolkit.ui.activity.XDefaultTitleActivity;
 
 
 /**
@@ -56,6 +59,20 @@ public class UITools {
     public static void copyText(String copyText, Context context) {
         ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         cm.setText(copyText);        // 将文本内容放到系统剪贴板里。
+    }
+
+
+    /**
+     * 字符是否为空
+     *
+     * @param msg
+     * @return
+     */
+    public static boolean isEmpty(String msg) {
+        if (!TextUtils.isEmpty(msg)) {
+            return TextUtils.isEmpty(msg.trim());
+        }
+        return true;
     }
 
 }

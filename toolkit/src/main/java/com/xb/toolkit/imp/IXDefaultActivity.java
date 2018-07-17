@@ -41,12 +41,8 @@ public interface IXDefaultActivity {
      */
     int layoutTitleID();
 
-    /**
-     * title
-     *
-     * @return
-     */
-    View titleView();
+
+    void initTitleView(View layoutTitleView);
 
     /**
      * 是否全屏
@@ -95,12 +91,9 @@ public interface IXDefaultActivity {
     /**
      * 开启软键盘
      */
-    void openKeyboard(EditText editText);
+    void openKeyboard(View view);
 
-    /**
-     * 关闭软键盘
-     */
-    void closeKeyboard(EditText editText);
+    void closeKeyboard();
 
     /**
      * 开启全屏
@@ -129,7 +122,9 @@ public interface IXDefaultActivity {
      * @param permissions    权限
      */
     void requestPermission(int permissionType, IXRequestPermissionCallBack listener, @NonNull String... permissions);
+
     void requestPermission(IXRequestPermissionCallBack listener, @NonNull String... permissions);
+
     void requestPermission(@NonNull String... permissions);
 
     /**

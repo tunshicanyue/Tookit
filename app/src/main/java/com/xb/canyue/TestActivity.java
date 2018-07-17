@@ -12,17 +12,27 @@ import android.widget.Toast;
 import com.xb.toolkit.imp.IKeyboardListener;
 import com.xb.toolkit.imp.IXRequestPermissionCallBack;
 import com.xb.toolkit.ui.activity.XDefaultActivity;
+import com.xb.toolkit.ui.activity.XDefaultTitleActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TestActivity extends XDefaultActivity {
-    @BindView(R.id.root)
-    LinearLayout mRoot;
+public class TestActivity extends XDefaultTitleActivity {
+    @Override
+    public void onCreateView(Bundle savedInstanceState) {
 
-    public static final String TAG = "XDefaultActivity";
-    @BindView(R.id.et_text)
-    EditText mEtText;
+    }
+
+    @Override
+    public void showPermissionFailureDialog(int permissionType, String[] permission) {
+
+    }
+
+
+    @Override
+    public void initTitleView(View view) {
+        super.initTitleView(view);
+    }
 
     @Override
     public int layoutID() {
@@ -30,58 +40,29 @@ public class TestActivity extends XDefaultActivity {
     }
 
     @Override
-    public void onCreateView(Bundle savedInstanceState) {
-        unFullScreenKeyBoardListener(mRoot, new IKeyboardListener() {
-            @Override
-            public void openKeyboard() {
-                Log.i(TAG, "openKeyboard: ");
-            }
-
-            @Override
-            public void closeKeyboard() {
-
-                Log.i(TAG, "closeKeyboard: ");
-            }
-        });
+    public void initActionBar() {
+//        addActionBarRightText(R.id.id_right_test, R.string.title_back);
+//        addActionBarRightDrawable(R.id.id_right_test22, R.drawable.ic_clear_black_24dp);
+//        addActionBarRightDrawable(R.id.id_right_test3, R.drawable.ic_clear_black_24dp);
+        showActionBarSearch("搜索", true);
+        setActionBarLeftDrawable(R.drawable.ic_chevron_left_black_24dp,"返回");
+        showActionLeftHide(false);
     }
 
     @Override
-    public boolean isShowActionBar() {
-        return true;
+    public void actionBarRightClick(View view) {
+        switch (view.getId()) {
+            case R.id.id_right_new:
+                removeActionBarRightItem(view.getId());
+                break;
+            case R.id.id_right_test22:
+//                changeActionBarRightDrawable(R.id.id_right_test3,R.id.id_right_test3,R.mipmap.ic_launcher);
+                showActionBarSearch("搜索", true);
+                break;
+        }
     }
-
-    @Override
-    public int layoutTitleID() {
-        return R.layout.x_item_title_bar;
-    }
-
-    @Override
-    public boolean isFullScreen() {
-        return false;
-    }
-
-    @Override
-    public void showPermissionFailureDialog(int permissionType, String[] permission) {
-        Toast.makeText(this, "showPermissionFailureDialog", Toast.LENGTH_SHORT).show();
-    }
-
-    int count = 0;
 
     public void dialog(View view) {
-
-        requestPermission(new IXRequestPermissionCallBack() {
-            @Override
-            public void permissionGranted(@NonNull String[] permission) {
-
-                Log.i(TAG, "permissionGranted: ");
-            }
-
-            @Override
-            public void permissionDenied(@NonNull String[] permission) {
-                Log.i(TAG, "permissionDenied: ");
-            }
-        }, Manifest.permission.CALL_PHONE);
+        changeActionBarRightItemText(R.id.id_right_new, R.id.id_right_test, R.string.app_name);
     }
-
-
 }
