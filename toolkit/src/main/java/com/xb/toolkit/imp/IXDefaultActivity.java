@@ -135,4 +135,8 @@ public interface IXDefaultActivity {
      */
     void showPermissionFailureDialog(int permissionType, String[] permission);
 
+
+    /*设置监听*/
+    void bindListener();
+
 }

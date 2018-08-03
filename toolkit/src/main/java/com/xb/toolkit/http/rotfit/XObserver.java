@@ -12,7 +12,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 
-public class XObserver<T extends XBean> implements Observer<T> {
+public class XObserver<T> implements Observer<T> {
 
     private XHttpProxy.Builder mBuilder;
 
@@ -28,7 +28,7 @@ public class XObserver<T extends XBean> implements Observer<T> {
             d.dispose();
             return;//结束 不执行
         }
-        if (mBuilder.isShowDialog()){
+        if (mBuilder.isShowDialog()) {
             XHttpDialogManager.getInstance().showDialog(mBuilder.getContext().get());
         }
 
@@ -50,8 +50,19 @@ public class XObserver<T extends XBean> implements Observer<T> {
     @Override
     public void onNext(T t) {
         try {
-            XOnResultListener xOnResultListener = mBuilder.getXOnResultListener();
-            xOnResultListener.onRequestSuccess(t);
+            if (t != null && t instanceof XBean) {
+                XBean xBean = (XBean) t;
+                switch (xBean.getCode()) {
+                    case "200":
+                        mBuilder.getXOnResultListener().onRequestSuccess(t);
+                        break;
+                    default:
+                        mBuilder.getXOnResultListener().onRequestFailed(xBean.getMessage(), XHttpProxy.RequestType.REQUEST_ERROR);
+                }
+            } else {
+                XOnResultListener xOnResultListener = mBuilder.getXOnResultListener();
+                xOnResultListener.onRequestSuccess(t);
+            }
         } catch (Exception e) {
             onError(e);
         }

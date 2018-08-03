@@ -402,6 +402,11 @@ public abstract class XDefaultTitleActivity extends XDefaultActivity {
         setActionBarTitle(titleID != 0 ? getString(titleID) : null, mDefaultCenterSize, mDefaultActionBarTextColor);
     }
 
+    public void setActionBarTitle(String title) {
+        setActionBarTitle(title, mDefaultCenterSize, mDefaultActionBarTextColor);
+    }
+
+
     /*左边的点击事件*/
     public void actionBarLeftClick(View v) {
         finish();

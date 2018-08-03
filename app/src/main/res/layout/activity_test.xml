@@ -20,5 +20,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/app_name" />
 
+    <LinearLayout
+        android:id="@+id/rl_detail_hint"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></LinearLayout>
 
 </LinearLayout>

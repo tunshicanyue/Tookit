@@ -1,11 +1,13 @@
 package com.xb.toolkit.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -13,12 +15,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -32,6 +36,11 @@ import com.xb.toolkit.ui.fragment.XDefaultFragment;
 import com.xb.toolkit.utils.AppManager;
 import com.xb.toolkit.utils.PermissionsUtil;
 import com.xb.toolkit.utils.ScreenUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -76,6 +85,7 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
      */
     public static final int PERMISSION_TYPE_OTHER = 0x1;
     private InputMethodManager imm;
+    private FrameLayout mFl_layout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +93,7 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
         AppManager.getAppManager().addActivity(this);
         setContentView(R.layout.activity_x_default);
         mIdTitleBar = findViewById(R.id.id_title_bar);
+        mFl_layout = findViewById(R.id.fl_layout);
         mXRoot = findViewById(R.id.x_root);
         addMainFragment();
     }
@@ -94,16 +105,53 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
         mXDefaultFragment = new XDefaultFragment();
         mXDefaultFragment.setLayoutId(layoutID());
         mXDefaultFragment.setActivityCreateListener(savedInstanceState -> {
-            mUnbinder = ButterKnife.bind(XDefaultActivity.this);
+            mUnbinder = ButterKnife.bind(this);
             if (!isFullScreen() && isShowActionBar() && mIdTitleBar.getParent() != null) {
                 mIdTitleBar.setLayoutResource(layoutTitleID());
                 mLayoutTitleView = mIdTitleBar.inflate();
                 initTitleView(mLayoutTitleView);
             }
             XDefaultActivity.this.onCreateView(savedInstanceState);
+            bindListener();
         });
         transaction.replace(R.id.fl_layout, mXDefaultFragment);
         transaction.commitAllowingStateLoss();
+    }
+
+
+    @Override
+    public void bindListener() {
+
+    }
+
+    private List<View> mLayoutID = new ArrayList<>();
+
+
+    public void addDataEmpty(@LayoutRes int layoutID) {
+        View view = LayoutInflater.from(this).inflate(layoutID, null);
+        mLayoutID.add(view);
+        mFl_layout.addView(view);
+        view.setVisibility(View.VISIBLE);
+        for (int i = 0; i < mFl_layout.getChildCount(); i++) {
+            View childAt = mFl_layout.getChildAt(i);
+            if (childAt != view) {
+                childAt.setVisibility(View.GONE);
+            } else {
+                childAt.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public void showLayout(@LayoutRes int layoutID) {
+        for (int i = 0; i < mFl_layout.getChildCount(); i++) {
+
+        }
+    }
+
+
+    public void updateLayout(@LayoutRes int layoutID) {
+        View view = View.inflate(this, layoutID, null);
+        mFl_layout.addView(view);
     }
 
 

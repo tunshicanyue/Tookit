@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">toolkit</string>
     <string name="title_back">返回</string>
+    <string name="url_empty">情传入正确的连接地址</string>
 </resources>
