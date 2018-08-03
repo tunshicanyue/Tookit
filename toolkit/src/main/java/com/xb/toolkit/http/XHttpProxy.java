@@ -2,11 +2,14 @@ package com.xb.toolkit.http;
 
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 
 import com.xb.toolkit.Toolkit;
 import com.xb.toolkit.bean.XBean;
+import com.xb.toolkit.http.imp.XIOnDownloadResultListener;
 import com.xb.toolkit.http.imp.XOnResultListener;
+import com.xb.toolkit.http.rotfit.DownloadUtil;
 import com.xb.toolkit.http.rotfit.XHttpManager;
 import com.xb.toolkit.http.rotfit.XObserver;
 import com.xb.toolkit.http.rotfit.XRetrofitFactory;
@@ -148,6 +151,13 @@ public class XHttpProxy {
         REQUEST_ERROR
     }
 
+
+    public static void downloadFile(String url,
+                                    String destFileDir,
+                                    String destFileName,
+                                    XIOnDownloadResultListener listener) {
+        DownloadUtil.getInstance().download(url, destFileDir, destFileName, listener);
+    }
 
     public XHttpManager xhttpManager() {
         return XHttpManager.getInstance();
