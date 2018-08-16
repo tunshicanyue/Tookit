@@ -17,12 +17,10 @@ import retrofit2.Converter;
 public class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
     private final TypeAdapter<T> adapter;
-    private String cacheUrl;
 
     GsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter, String cacheUrl) {
         this.gson = gson;
         this.adapter = adapter;
-        this.cacheUrl = cacheUrl;
     }
 
     @Override
