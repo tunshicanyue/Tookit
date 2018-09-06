@@ -4,8 +4,7 @@ package com.xb.toolkit.http.gson;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.xb.toolkit.Toolkit;
-import com.xb.toolkit.utils.LogUtils;
+import com.xb.toolkit.utils.log.LogUtils;
 
 
 import java.io.IOException;

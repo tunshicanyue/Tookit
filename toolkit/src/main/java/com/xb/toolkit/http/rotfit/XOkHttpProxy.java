@@ -1,11 +1,8 @@
 package com.xb.toolkit.http.rotfit;
 
-import android.util.Log;
-
-import com.xb.toolkit.utils.LogUtils;
+import com.xb.toolkit.utils.log.LogUtils;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;

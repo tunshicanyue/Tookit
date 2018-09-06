@@ -2,15 +2,13 @@ package com.xb.toolkit.http.gson;
 
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
-import com.xb.toolkit.utils.LogUtils;
+import com.xb.toolkit.utils.log.LogUtils;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import okhttp3.RequestBody;

@@ -6,11 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.xb.toolkit.Toolkit;
 import com.xb.toolkit.http.XHttpProxy;
 import com.xb.toolkit.http.imp.XOnResultListener;
 import com.xb.toolkit.ui.widgets.alertview.AlertView;
-import com.xb.toolkit.utils.LogUtils;
+import com.xb.toolkit.utils.log.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

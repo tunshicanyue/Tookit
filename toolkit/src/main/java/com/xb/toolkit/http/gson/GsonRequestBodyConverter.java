@@ -1,11 +1,9 @@
 package com.xb.toolkit.http.gson;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonWriter;
-import com.xb.toolkit.utils.LogUtils;
+import com.xb.toolkit.utils.log.LogUtils;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

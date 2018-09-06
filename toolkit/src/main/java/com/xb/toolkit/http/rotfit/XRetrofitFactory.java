@@ -2,20 +2,16 @@ package com.xb.toolkit.http.rotfit;
 
 import com.xb.toolkit.Toolkit;
 import com.xb.toolkit.http.gson.GsonCustomConverterFactory;
-import com.xb.toolkit.utils.LogUtils;
+import com.xb.toolkit.utils.log.LogUtils;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
-import okhttp3.Headers;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class XRetrofitFactory {
