@@ -4,6 +4,7 @@ import com.xb.toolkit.Toolkit;
 import com.xb.toolkit.http.gson.GsonCustomConverterFactory;
 import com.xb.toolkit.utils.log.LogUtils;
 
+import java.time.Month;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
@@ -16,9 +17,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class XRetrofitFactory {
     private static OkHttpClient.Builder builder;
+    static String METHOD_GET  = "GET";
+
 
     static {
-        int OUT_TIME = 20;//网络连接超时
+        //网络连接超时
+        int OUT_TIME = 20;
         builder = new OkHttpClient.Builder()
                 .connectTimeout(OUT_TIME, TimeUnit.SECONDS)
                 .writeTimeout(OUT_TIME, TimeUnit.SECONDS);
@@ -39,16 +43,23 @@ public class XRetrofitFactory {
     }
 
 
-    /*请求参数*/
+    /**
+     * 请求参数
+     *
+     * @param request
+     * @return
+     */
     private static String getRequestParam(Request request) {
         String result = "";
-        if (!request.method().contains("GET")) {
+        if (!request.method().contains(METHOD_GET)) {
             if (request.body() instanceof FormBody) {
                 FormBody formBody = (FormBody) request.body();
                 if (formBody != null && formBody.size() > 0) {
                     for (int i = 0, len = formBody.size(); i < len; i++) {
                         result = result + (formBody.encodedName(i) + "=" + formBody.encodedValue(i));
-                        if (i < len - 1) result += "&";
+                        if (i < len - 1) {
+                            result += "&";
+                        }
                     }
                 }
             }

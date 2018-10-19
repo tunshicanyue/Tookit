@@ -15,9 +15,7 @@ import okhttp3.RequestBody;
 import okio.Buffer;
 import retrofit2.Converter;
 
-/**
- * Created by Administrator on 2018/1/8 0008.
- */
+
 
 public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
 

@@ -10,6 +10,8 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * 网络管理
+ *
+ * @author admin
  */
 public class XHttpManager {
 
@@ -67,7 +69,8 @@ public class XHttpManager {
         while (iterator.hasNext()) {
             String keyTag = iterator.next();
             Disposable disposable = mDisposables.get(keyTag);
-            if (disposable != null) {//关闭网络请求
+            //关闭网络请求
+            if (disposable != null) {
                 disposable.dispose();
             }
         }

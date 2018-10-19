@@ -10,6 +10,8 @@ import java.lang.ref.WeakReference;
 
 /**
  * 网络请求的提示弹窗Dialog
+ *
+ * @author admin
  */
 public abstract class XBaseDialog {
 
@@ -55,7 +57,9 @@ public abstract class XBaseDialog {
     }
 
     public void showDialog() {
-        if (isShowDialog) return;//在显示就结束
+        if (isShowDialog) {
+            return;//在显示就结束
+        }
         isShowDialog = true;
         decorView.addView(rootView);
     }

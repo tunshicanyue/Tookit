@@ -18,7 +18,9 @@ public class XObserver<T> implements Observer<T> {
 
 
     public XObserver(XHttpProxy.Builder builder) {
-        if (builder == null) throw new RuntimeException("http request no builder null");
+        if (builder == null) {
+            throw new RuntimeException("http request no builder null");
+        }
         mBuilder = builder;
     }
 

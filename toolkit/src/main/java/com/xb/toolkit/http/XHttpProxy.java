@@ -39,7 +39,9 @@ public class XHttpProxy {
 
     public static XHttpProxy init(String URL) {
         synchronized (XHttpProxy.class) {
-            if (mXHttpProxy == null) mXHttpProxy = new XHttpProxy(URL);
+            if (mXHttpProxy == null) {
+                mXHttpProxy = new XHttpProxy(URL);
+            }
         }
         return mXHttpProxy;
     }

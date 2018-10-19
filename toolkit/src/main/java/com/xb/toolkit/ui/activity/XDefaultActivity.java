@@ -342,7 +342,7 @@ public abstract class XDefaultActivity extends AppCompatActivity implements IXDe
     public final void permissionGranted(@NonNull String[] permission) {
         //权限请求成功
         if (mRequestPermissionCallBack != null) {
-            mRequestPermissionCallBack.permissionDenied(permission);
+            mRequestPermissionCallBack.permissionGranted(permission);
         }
     }
 

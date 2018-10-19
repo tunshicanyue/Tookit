@@ -4,6 +4,7 @@ import java.io.File;
 
 /**
  * 下载的监听器
+ * @author admin
  */
 public interface XIOnDownloadResultListener {
 
