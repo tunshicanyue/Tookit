@@ -51,23 +51,20 @@ public class XObserver<T> implements Observer<T> {
 
     @Override
     public void onNext(T t) {
-        try {
-            if (t != null && t instanceof XBean) {
-                XBean xBean = (XBean) t;
-                switch (xBean.getCode()) {
-                    case "200":
-                        mBuilder.getXOnResultListener().onRequestSuccess(t);
-                        break;
-                    default:
-                        mBuilder.getXOnResultListener().onRequestFailed(xBean.getMessage(), XHttpProxy.RequestType.REQUEST_ERROR);
-                }
-            } else {
-                XOnResultListener xOnResultListener = mBuilder.getXOnResultListener();
-                xOnResultListener.onRequestSuccess(t);
+        if (t != null && t instanceof XBean) {
+            XBean xBean = (XBean) t;
+            switch (xBean.getCode()) {
+                case "200":
+                    mBuilder.getXOnResultListener().onRequestSuccess(t);
+                    break;
+                default:
+                    mBuilder.getXOnResultListener().onRequestFailed(xBean.getMessage(), XHttpProxy.RequestType.REQUEST_ERROR);
             }
-        } catch (Exception e) {
-            onError(e);
+        } else {
+            XOnResultListener xOnResultListener = mBuilder.getXOnResultListener();
+            xOnResultListener.onRequestSuccess(t);
         }
+
     }
 
     @Override

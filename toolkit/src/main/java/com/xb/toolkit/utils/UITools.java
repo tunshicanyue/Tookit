@@ -1,7 +1,9 @@
 package com.xb.toolkit.utils;
 
+import android.app.NotificationManager;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -73,6 +75,16 @@ public class UITools {
             return TextUtils.isEmpty(msg.trim());
         }
         return true;
+    }
+
+    /**
+     * 判断用户是否开启了通知权限
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isOpenNotification(Context context) {
+        return NotificationManagerCompat.from(context).areNotificationsEnabled();
     }
 
 }

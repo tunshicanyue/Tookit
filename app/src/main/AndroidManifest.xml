@@ -3,9 +3,7 @@
     package="com.xb.canyue">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
 
     <application
         android:name=".AppContext"
@@ -15,15 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".TestActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".WebTestActivity" />
+        <activity android:name=".time_line.TimeLineActivity"/>
+        <activity android:name=".Demo2Activity">
 
         </activity>
-        <activity android:name=".WebTestActivity">
+        <activity android:name=".DemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
