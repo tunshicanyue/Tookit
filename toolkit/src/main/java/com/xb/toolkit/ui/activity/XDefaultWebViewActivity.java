@@ -55,8 +55,8 @@ public class XDefaultWebViewActivity extends XDefaultTitleActivity {
         mTitle = intent.getStringExtra(WEB_TITLE);
         mProgressColor = intent.getIntExtra(PROGRESS_COLOR, mProgressColor);
         if (TextUtils.isEmpty(mWebUrl)
-                || mWebUrl.contains("http://")
-                || mWebUrl.contains("https://")) {
+                ||(!mWebUrl.contains("http://")
+                &&!mWebUrl.contains("https://"))) {
             showToast(getString(R.string.url_empty));
             finish();
             return;
